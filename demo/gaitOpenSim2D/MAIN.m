@@ -1,13 +1,16 @@
-% MAIN.m  --  Five Link Biped trajectory optimization
+% MAIN.m  --  OpenSim 2D Gait model trajectory optimization.
 %
-% This script sets up and then solves the optimal trajectory for the five
-% link biped, assuming that the walking gait is compused of single-stance
-% phases of motion connected by impulsive heel-strike (no double-stance or
-% flight phases).
+% This script sets up and then solves the optimal trajectory for an OpenSim
+% model "2D_gait.osim" which has 10 kinematic degrees of freedom and 18
+% muscles + one torque actuator to represent the lumbar region.
 %
-% The equations of motion and gradients are all derived by:
-%   --> Derive_Equations.m 
+% Dependencies: OpenSim Moco latest version as of 05/20/2021.
 %
+% I have compiled the source code from scratch in order to have access to
+% features not yet part of Moco release 0.4.0. Now part of OpenSim-Core,
+% Moco is just part of the normal OpenSim source code now.
+%
+% Author: Tyler Morrison, The Ohio State University 05/20/2021.
 
 clc; clear; 
 addpath ../../

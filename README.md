@@ -71,3 +71,5 @@ If you are interested in contributing, here are a few possible things to do:
 - [__Will Wehner__](https://github.com/wwehner) implemented analytic gradients in the 4th-order Runge-Kutta method.
 
 - [__Conrad McGreal__](https://github.com/cjmcgreal) contributed the minimum-time 3D quadrotor example.
+
+- [__Tyler Morrison__](https://github.com/tymo77) contribute OpenSim compatibility and examples.
