@@ -10,6 +10,7 @@ function problem = getDefaultOptions(problem)
 OPT.method = 'trapezoid';
 OPT.verbose = 2;
 OPT.defaultAccuracy = 'medium';
+OPT.scaled = false;
 
 
 %%%% Basic setup

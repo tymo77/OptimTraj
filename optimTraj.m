@@ -168,6 +168,11 @@ for iter=1:nIter
     if P.options.verbose > 0    %then print out iteration count:
         disp('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
         disp(['Running OptimTraj, iteration ' num2str(iter)]);
+        if problem.scaled
+            disp('Scaling is on.');
+        else
+            disp('Scaling is off.');
+        end
     end
     
     if iter > 1  %Use previous soln as new guess

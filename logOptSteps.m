@@ -1,13 +1,11 @@
-function stop = logOptSteps(z, optimValues, dirname, pack, k)
+function stop = logOptSteps(z, optimValues, pack, scaler)
 stop = false;
 
-if ~exist(dirname, 'dir')
-    mkdir(dirname)
-end
-
-fn = [dirname 'it_log_' num2str(k) '.mat'];
+fn = ['it_log.mat'];
 
 g = optimValues.gradient;
+
+z = scaler.funscalez(z);
 
 [t, x, u] = unPackDecVar_dc(z, pack);
 [gt, gx, gu] = unPackDecVar_dc(g, pack);

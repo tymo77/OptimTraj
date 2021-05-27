@@ -74,7 +74,11 @@ problem.func.weights([1,end]) = 1/3;
 problem.func.defectCst = @computeDefects;
 
 %%%% The key line - solve the problem by direct collocation:
-soln = directCollocation(problem);
+if problem.scaled
+    soln = directCollocationScaled(problem);
+else
+    soln = directCollocation(problem);
+end
 
 % Use method-consistent interpolation
 tSoln = soln.grid.time;

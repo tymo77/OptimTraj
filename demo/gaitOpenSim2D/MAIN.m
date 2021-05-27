@@ -225,24 +225,20 @@ method = 'hermiteSimpson';
 % method = 'rungeKutta';  %slow!
 % method = 'gpops';
 
-Nt = 20; 
+Nt = 3; 
 dirname = 'test'; k = 1;
 switch method
     
     case 'trapezoid'
+        
         problem.options(1).method = 'trapezoid'; % Select the transcription method
         problem.options(1).trapezoid.nGrid = Nt;  %method-specific options
-        Nmesh = Nt;
-        [~, pack] = packDecVar_dc(1:Nmesh, repmat(x_lb, [1 Nmesh]), repmat(u_lb, [1 Nmesh]));
-        outputfcn = @(x,optimValues,state) logOptSteps(x, optimValues, dirname, pack, k);
+        
     case 'hermiteSimpson'
         
         % First iteration: get a more reasonable guess
         problem.options(1).method = 'hermiteSimpson'; % Select the transcription method
         problem.options(1).hermiteSimpson.nSegment = Nt;  %method-specific options
-        Nmesh = 2*Nt + 1;
-        [~, pack] = packDecVar_dc(1:Nmesh, repmat(x_lb, [1 Nmesh]), repmat(u_lb, [1 Nmesh]));
-        outputfcn = @(x,optimValues,state) logOptSteps(x, optimValues, dirname, pack, k);
 
     case 'chebyshev'
         
@@ -250,18 +246,12 @@ switch method
         problem.options.method = 'chebyshev'; % Select the transcription method
         problem.options.chebyshev.nColPts = 9;  %method-specific options
 
-    case 'multiCheb'
-        
-        % First iteration: get a more reasonable guess
-        problem.options.method = 'multiCheb'; % Select the transcription method
-        problem.options.multiCheb.nColPts = 6;  %method-specific options
-        problem.options.multiCheb.nSegment = 4;  %method-specific options
-        
     case 'rungeKutta'
         problem.options(1).method = 'rungeKutta'; % Select the transcription method
         problem.options(1).defaultAccuracy = 'low';
             
     case 'gpops'
+        
         problem.options = [];
         problem.options.method = 'gpops';
         problem.options.defaultAccuracy = 'high';
@@ -279,7 +269,6 @@ problem.options(1).nlpOpt = optimset(...
     'TolFun',1e-3,...
     'MaxFunEvals',1e6,...
     'MaxIter', 1000,...
-    'OutputFcn', outputfcn,...
     'PlotFcn', {'optimplotfval','optimplotconstrviolation','optimplotfirstorderopt'});   %options for fmincon
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
@@ -287,6 +276,7 @@ problem.options(1).nlpOpt = optimset(...
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
 
 %%%%% THE KEY LINE:
+problem.scaled = true;
 soln = optimTraj(problem);
 
 %% Transcription Grid points:
@@ -310,7 +300,7 @@ try
     close f1;
 catch
 end
-load('testit_log_1.mat')
+load('it_log.mat')
 Nits = size(X, 3);
 it_skip = 2;
 
